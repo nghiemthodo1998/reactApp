@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Rate } from 'antd';
 import './Cart.css';
 import Title from 'antd/lib/typography/Title';
-import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deteleProductCart, decreaseCount } from '../../Redux/cartSlice';
+import {
+  deteleProductCart,
+  decreaseCount,
+  increaseCount,
+} from '../../Redux/cartSlice';
+
+const inititalPagination = {
+  current: 2,
+  pageSize: 2,
+};
 
 const Cart = () => {
+  const [pagination, setPagination] = useState(inititalPagination);
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const columns = [
@@ -42,15 +51,21 @@ const Cart = () => {
         return (
           <>
             <button
+              disabled={record.count === 0}
               onClick={() => {
-                console.log(record);
-                dispatch(decreaseCount(record));
+                dispatch(decreaseCount(record.id));
               }}
             >
               -
             </button>
             <span className="count">{record.count}</span>
-            <button>+</button>
+            <button
+              onClick={() => {
+                dispatch(increaseCount(record.id));
+              }}
+            >
+              +
+            </button>
           </>
         );
       },
@@ -60,7 +75,9 @@ const Cart = () => {
       dataIndex: 'price',
       key: 'price',
       align: 'center',
-      render: (price) => <Title level={5}>${price}</Title>,
+      render: (text, record, index) => (
+        <Title level={5}>${record.count * record.price}</Title>
+      ),
     },
 
     {
@@ -71,11 +88,6 @@ const Cart = () => {
       render: (id) => {
         return (
           <>
-            <Button type="primary" className="mr-1">
-              <NavLink end to={`edit-product/${id}`}>
-                Sửa
-              </NavLink>
-            </Button>
             <Button
               type="primary"
               danger
@@ -95,7 +107,8 @@ const Cart = () => {
         rowKey={'id'}
         dataSource={cart}
         columns={columns}
-        footer={() => 'Footer'}
+        // pagination={pagination}
+        pagination={false}
       />
       ;
     </div>

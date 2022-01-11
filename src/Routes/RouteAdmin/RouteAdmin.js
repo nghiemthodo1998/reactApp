@@ -25,6 +25,8 @@ function RouteAdmin() {
   }, [loading]);
 
   const products = useSelector((state) => state.product.products);
+  const categories = useSelector((state) => state.category.categories);
+
   return (
     <>
       <Routes>

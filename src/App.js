@@ -8,14 +8,19 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import DetailProduct from './Pages/DetailProduct/DetailProduct';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { getProduct } from './Redux/productSlice';
+import { getProducts } from './Redux/productSlice';
+import { getCategories } from './Redux/categorySlice';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get('http://localhost:8000/products').then((res) => {
-      dispatch(getProduct(res.data));
+      dispatch(getProducts(res.data));
+    });
+
+    axios.get('http://localhost:8000/categories').then((res) => {
+      dispatch(getCategories(res.data));
     });
   });
   return (
@@ -26,7 +31,6 @@ function App() {
             <Route exact strict path="/dashboard/*" element={<Dashboard />} />
             <Route exact strict path="/*" element={<Home />} />
             <Route exact strict path="/login" element={<Login />} />
-            <Route path="/detail-product/:id" element={<DetailProduct />} />
           </Routes>
         </div>
       </div>

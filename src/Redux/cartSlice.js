@@ -20,14 +20,32 @@ const productSlice = createSlice({
       state.cart = [...result];
     },
     decreaseCount: (state, action) => {
-      const id = action.payload.id;
-      // const indexDecrease = data.findIndex((item) => item.id === id);
-      // console.log(indexDecrease);
-      const productDecrease = {};
+      const id = action.payload;
+      state.cart = state.cart.map((product) => {
+        if (product.id !== id) {
+          return product;
+        }
+        return {
+          ...product,
+          count: product.count - 1,
+        };
+      });
+    },
+    increaseCount: (state, action) => {
+      const id = action.payload;
+      state.cart = state.cart.map((product) => {
+        if (product.id !== id) {
+          return product;
+        }
+        return {
+          ...product,
+          count: product.count + 1,
+        };
+      });
     },
   },
 });
 
-export const { addToCart, deteleProductCart, decreaseCount } =
+export const { addToCart, deteleProductCart, decreaseCount, increaseCount } =
   productSlice.actions;
 export default productSlice.reducer;

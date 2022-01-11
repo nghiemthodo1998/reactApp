@@ -9,17 +9,9 @@ import './Content.css';
 import Filter from '../Filter/Filter';
 import Slide from '../Slide/Slide';
 import SearchField from '../SearchField/SearchField';
+import { useSelector } from 'react-redux';
 
 function Content() {
-  const [priceRange, setPriceRange] = useState(0);
-  const [category, setCategory] = useState([]);
-  const [categoryFilter, setCategoryFilter] = useState('0');
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:8000/categories')
-      .then((res) => setCategory(res.data));
-  }, []);
   return (
     <>
       <SearchField />

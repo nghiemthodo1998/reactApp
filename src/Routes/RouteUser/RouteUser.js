@@ -11,7 +11,7 @@ const RouteUser = () => {
   return (
     <Routes>
       <Route exact strict path="/*" element={<Content />} />
-      <Route path="/detail-product/:id" element={<DetailProduct />} />
+      <Route path="detail-product/:id" element={<DetailProduct />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/magazine" element={<Magazine />} />
