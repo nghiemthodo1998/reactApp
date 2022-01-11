@@ -1,0 +1,17 @@
+.login-overview {
+  text-align: center;
+  padding-top: 15%;
+  padding-bottom: 30%;
+}
+
+.submit-btn {
+  width: 25%;
+}
+
+.form-input {
+  width: 25%;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: large;
+  margin-bottom: 10px;
+}

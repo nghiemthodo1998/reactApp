@@ -1,24 +1,36 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import 'antd/dist/antd.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Auth/Login';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import DetailProduct from './Pages/DetailProduct/DetailProduct';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { getProduct } from './Redux/productSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/products').then((res) => {
+      dispatch(getProduct(res.data));
+    });
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <div className="overview">
+          <Routes>
+            <Route exact strict path="/dashboard/*" element={<Dashboard />} />
+            <Route exact strict path="/*" element={<Home />} />
+            <Route exact strict path="/login" element={<Login />} />
+            <Route path="/detail-product/:id" element={<DetailProduct />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 

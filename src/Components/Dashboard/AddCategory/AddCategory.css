@@ -1,0 +1,16 @@
+.list-categories {
+  list-style-type: none;
+}
+
+.list-categories-item {
+  border: 4px rgb(20, 201, 186) solid;
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+ul {
+  padding: 0;
+  margin: 0;
+}

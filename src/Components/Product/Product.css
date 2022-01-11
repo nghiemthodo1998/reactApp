@@ -1,0 +1,43 @@
+.view {
+}
+.product-overview {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  margin: 0 0 40px 0;
+  background-color: white;
+  padding: 20px 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.name-product {
+  height: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.category {
+  height: 14px;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+
+.price {
+  margin-bottom: 40px;
+}
+
+.add-to-cart {
+  overflow: hidden;
+}
+.add {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+.btn-add {
+  float: right;
+}

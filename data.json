@@ -1,0 +1,61 @@
+{
+    "categories": [
+      {
+        "id": 1,
+        "name": "Hp"
+      },
+      {
+        "id": 2,
+        "name": "Dell"
+      },
+      {
+        "id": 3,
+        "name": "Asus"
+      }
+    ],
+    "products": [
+      {
+        "id": 1,
+        "category": "Hp",
+        "name": "Laptop Omen",
+        "rating": 3,
+        "price": 2000
+      },
+      {
+        "id": 2,
+        "category": "Hp",
+        "name": "Laptop ZBook",
+        "rating": 4,
+        "price": 2400
+      },
+      {
+        "id": 3,
+        "category": "Hp",
+        "name": "Laptop Vostro",
+        "rating": 2,
+        "price": 1000
+      },
+      {
+        "id": 4,
+        "category": "Dell",
+        "name": "Laptop Inspiron",
+        "rating": 1,
+        "price": 800
+      },
+      {
+        "id": 5,
+        "category": "Dell",
+        "name": "Laptop ZenBook",
+        "rating": 1,
+        "price": 1200
+      },
+      {
+        "id": 6,
+        "category": "Asus",
+        "name": "Laptop ROG",
+        "rating": 1,
+        "price": 1800
+      }
+  
+    ]
+  }
