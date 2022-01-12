@@ -19,6 +19,7 @@ function AddProduct(props) {
       .post('http://localhost:8000/products', {
         name: nameProduct,
         category: categoryProduct,
+        count: 1,
         rating: +ratingProduct,
         price: +priceProduct,
       })

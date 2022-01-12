@@ -104,13 +104,13 @@ const Cart = () => {
     <div>
       Cart
       <Table
+        className="table-overview"
         rowKey={'id'}
         dataSource={cart}
         columns={columns}
         // pagination={pagination}
         pagination={false}
       />
-      ;
     </div>
   );
 };
