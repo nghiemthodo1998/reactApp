@@ -4,30 +4,37 @@ import './AddProduct.css';
 import { Form, Input, Button, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../../Redux/productSlice';
+
+const initialProduct = {
+  name: '',
+  category: '',
+  count: 1,
+  rating: '',
+  price: '',
+};
 
 function AddProduct() {
-  const [nameProduct, setNameProduct] = useState('');
-  const [categoryProduct, setCategoryProduct] = useState('');
-  const [ratingProduct, setRatingProduct] = useState('');
-  const [priceProduct, setPriceProduct] = useState('');
-  const [imageProduct, setImageProduct] = useState('');
+  const [product, setProduct] = useState(initialProduct);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const products = useSelector((state) => state.product.products);
   const categories = useSelector((state) => state.category.categories);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    console.log(product);
     await axios
       .post('http://localhost:8000/products', {
-        name: nameProduct,
-        category: categoryProduct,
-        count: 1,
-        rating: +ratingProduct,
-        price: +priceProduct,
+        name: product.name,
+        category: product.category,
+        count: product.count,
+        rating: product.rating,
+        price: product.price,
       })
       .then(() => {
+        dispatch(addProduct(product));
         navigate('/dashboard/products');
       });
   };
@@ -39,8 +46,8 @@ function AddProduct() {
           <Input
             required
             placeholder="Nhập tên sản phẩm"
-            value={nameProduct}
-            onChange={(e) => setNameProduct(e.target.value)}
+            value={product.name}
+            onChange={(e) => setProduct({ ...product, name: e.target.value })}
           />
         </Form.Item>
         <Form.Item
@@ -50,7 +57,7 @@ function AddProduct() {
           <Select
             required
             placeholder="Nhập loại sản phẩm"
-            onChange={(e) => setCategoryProduct(e)}
+            onChange={(e) => setProduct({ ...product, category: e })}
           >
             {categories.map((c) => {
               return (
@@ -68,7 +75,7 @@ function AddProduct() {
         >
           <Select
             placeholder="Đánh giá về sản phẩm"
-            onChange={(e) => setRatingProduct(e)}
+            onChange={(e) => setProduct({ ...product, rating: +e })}
             required
           >
             <Select.Option value={5}>Rất tốt</Select.Option>
@@ -83,8 +90,8 @@ function AddProduct() {
           <Input
             required
             placeholder="Giá tiền của sản phẩm"
-            value={priceProduct}
-            onChange={(e) => setPriceProduct(e.target.value)}
+            value={product.price}
+            onChange={(e) => setProduct({ ...product, price: +e.target.value })}
           />
         </Form.Item>
         <Form.Item>
@@ -93,7 +100,7 @@ function AddProduct() {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={handleSubmit}>
+          <Button type="primary" onClick={() => handleSubmit()}>
             Submit
           </Button>
         </Form.Item>

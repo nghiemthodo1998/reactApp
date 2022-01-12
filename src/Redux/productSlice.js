@@ -12,7 +12,17 @@ const productSlice = createSlice({
       state.products = action.payload;
     },
     addProduct: (state, action) => {
-      state.cart = [...state.cart, action.payload];
+      console.log(action.payload);
+      state.products = [
+        ...state.products,
+        {
+          name: action.payload.name,
+          category: action.payload.category,
+          rating: action.payload.rating,
+          count: action.payload.count,
+          price: action.payload.price,
+        },
+      ];
     },
     deleteProduct: (state, action) => {
       const id = action.payload;
