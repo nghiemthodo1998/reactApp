@@ -1,29 +1,22 @@
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategory } from '../../../Redux/categorySlice';
 import './AddCategory.css';
 
-const AddCategory = (props) => {
+const AddCategory = () => {
   const [category, setCategory] = useState('');
-  const [dataCategories, setDataCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/categories').then((res) => {
-      setDataCategories(res.data);
-      setLoading(false);
-    });
-  }, [loading]);
+  const categories = useSelector((state) => state.category.categories);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {}, [categories]);
+  const handleSubmit = () => {
     if (category) {
-      await axios
-        .post('http://localhost:8000/categories', { name: category })
-        .then(() => {
-          props.loading(true);
-          setLoading(true);
-          setCategory('');
-        });
+      axios.post('http://localhost:8000/categories', { name: category });
+      dispatch(addCategory(category));
+      setCategory('');
     } else {
       alert('Hãy nhập loại sản phẩm');
     }
@@ -39,16 +32,16 @@ const AddCategory = (props) => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <Button type="primary" onClick={(e) => handleSubmit(e)}>
+          <Button type="primary" onClick={() => handleSubmit()}>
             Submit
           </Button>
         </Form.Item>
         <Form.Item></Form.Item>
       </Form>
       <ul className="row list-categories">
-        {dataCategories.map((c) => {
+        {categories.map((c, index) => {
           return (
-            <div className="col-4" key={c.id}>
+            <div className="col-4" key={index}>
               <li className=" list-categories-item">{c.name}</li>
             </div>
           );

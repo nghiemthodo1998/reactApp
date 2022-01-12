@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Upload,
-} from 'antd';
+import { Form, Input, Button, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-function EditProduct(props) {
+import { useSelector } from 'react-redux';
+
+function EditProduct() {
   const [dataEdit, setDataEdit] = useState({});
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const categories = useSelector((state) => state.category.categories);
 
   useEffect(() => {
     axios
@@ -61,7 +53,7 @@ function EditProduct(props) {
             value={dataEdit.category}
             onChange={(e) => setDataEdit({ ...dataEdit, category: e })}
           >
-            {props.dataC.map((c) => {
+            {categories.map((c) => {
               return (
                 <Select.Option key={c.id} value={c.name}>
                   {c.category}

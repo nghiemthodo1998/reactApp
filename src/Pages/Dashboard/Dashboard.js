@@ -5,7 +5,7 @@ import { DesktopOutlined, PlusOutlined } from '@ant-design/icons';
 import { Link, NavLink } from 'react-router-dom';
 import RouteAdmin from '../../Routes/RouteAdmin/RouteAdmin';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Dashboard() {

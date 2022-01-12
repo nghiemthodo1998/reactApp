@@ -4,8 +4,9 @@ import './AddProduct.css';
 import { Form, Input, Button, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-function AddProduct(props) {
+function AddProduct() {
   const [nameProduct, setNameProduct] = useState('');
   const [categoryProduct, setCategoryProduct] = useState('');
   const [ratingProduct, setRatingProduct] = useState('');
@@ -13,6 +14,9 @@ function AddProduct(props) {
   const [imageProduct, setImageProduct] = useState('');
 
   const navigate = useNavigate();
+
+  const products = useSelector((state) => state.product.products);
+  const categories = useSelector((state) => state.category.categories);
 
   const handleSubmit = async () => {
     await axios
@@ -48,7 +52,7 @@ function AddProduct(props) {
             placeholder="Nhập loại sản phẩm"
             onChange={(e) => setCategoryProduct(e)}
           >
-            {props.dataC.map((c) => {
+            {categories.map((c) => {
               return (
                 <Select.Option key={c.id} value={c.name}>
                   {c.category}
