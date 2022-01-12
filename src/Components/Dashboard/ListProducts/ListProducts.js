@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Button, Image, Rate } from 'antd';
+import React from 'react';
+import { Table, Button, Rate } from 'antd';
 import axios from 'axios';
 import Title from 'antd/lib/typography/Title';
-import { Link, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProduct } from '../../../Redux/productSlice';
 
 function ListProducts() {
-  const [loading, setLoading] = useState(false);
   const products = useSelector((state) => state.product.products);
 
-  const deleteProduct = async (id) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteProduct = async (id) => {
     await axios.delete(`http://localhost:8000/products/${id}`).then(() => {
       alert(`Đã xóa sản phẩm ${id}`);
-      setLoading(!loading);
+      dispatch(deleteProduct(id));
     });
   };
 
@@ -61,7 +63,11 @@ function ListProducts() {
                 Sửa
               </NavLink>
             </Button>
-            <Button type="primary" danger onClick={() => deleteProduct(id)}>
+            <Button
+              type="primary"
+              danger
+              onClick={() => handleDeleteProduct(id)}
+            >
               Xóa
             </Button>
           </>
