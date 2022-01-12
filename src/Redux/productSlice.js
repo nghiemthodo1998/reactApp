@@ -26,11 +26,16 @@ const productSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       const id = action.payload;
-
       state.products = state.products.filter((product) => product.id !== id);
+    },
+    editProduct: (state, action) => {
+      const id = action.payload.id;
+      const indexProduct = state.products.findIndex((item) => item.id === +id);
+      state.products.splice(indexProduct, 1, action.payload);
     },
   },
 });
 
-export const { getProducts, addProduct, deleteProduct } = productSlice.actions;
+export const { getProducts, addProduct, deleteProduct, editProduct } =
+  productSlice.actions;
 export default productSlice.reducer;

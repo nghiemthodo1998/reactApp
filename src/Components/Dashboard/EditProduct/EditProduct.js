@@ -3,34 +3,44 @@ import { Form, Input, Button, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { editProduct } from '../../../Redux/productSlice';
 
 function EditProduct() {
-  const [dataEdit, setDataEdit] = useState({});
-
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const [detailProduct, setDetailProduct] = useState({});
+
+  const products = useSelector((state) => state.product.products);
   const categories = useSelector((state) => state.category.categories);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/products/${id}`)
-      .then((res) => setDataEdit(res.data));
-  }, [id]);
-
-  const handleSubmit = () => {
-    const editData = async () => {
-      await axios.put(`http://localhost:8000/products/${id}`, {
-        id: id,
-        name: dataEdit.name,
-        category: dataEdit.category,
-        rating: dataEdit.rating,
-        price: dataEdit.price,
+    const getProductById = async () => {
+      await products.forEach((item) => {
+        if (item.id === +id) {
+          setDetailProduct(item);
+        }
       });
     };
-    editData();
-    navigate('/dashboard/products');
+    getProductById();
+  }, [id, products]);
+
+  const handleSubmit = () => {
+    axios
+      .put(`http://localhost:8000/products/${id}`, {
+        id: id,
+        name: detailProduct.name,
+        category: detailProduct.category,
+        rating: detailProduct.rating,
+        price: detailProduct.price,
+        count: detailProduct.counts,
+      })
+      .then(() => {
+        dispatch(editProduct(detailProduct));
+        navigate('/dashboard/products');
+      });
   };
   return (
     <div>
@@ -39,8 +49,10 @@ function EditProduct() {
           <Input
             required
             placeholder="Nhập tên sản phẩm"
-            value={dataEdit.name}
-            onChange={(e) => setDataEdit({ ...dataEdit, name: e.target.value })}
+            value={detailProduct.name}
+            onChange={(e) =>
+              setDetailProduct({ ...detailProduct, name: e.target.value })
+            }
           />
         </Form.Item>
         <Form.Item
@@ -50,8 +62,10 @@ function EditProduct() {
           <Select
             required
             placeholder="Nhập loại sản phẩm"
-            value={dataEdit.category}
-            onChange={(e) => setDataEdit({ ...dataEdit, category: e })}
+            value={detailProduct.category}
+            onChange={(e) =>
+              setDetailProduct({ ...detailProduct, category: e })
+            }
           >
             {categories.map((c) => {
               return (
@@ -69,8 +83,8 @@ function EditProduct() {
         >
           <Select
             placeholder="Đánh giá về sản phẩm"
-            value={dataEdit.rating}
-            onChange={(e) => setDataEdit({ ...dataEdit, rating: e })}
+            value={detailProduct.rating}
+            onChange={(e) => setDetailProduct({ ...detailProduct, rating: +e })}
             required
           >
             <Select.Option value={5}>Rất tốt</Select.Option>
@@ -85,9 +99,9 @@ function EditProduct() {
           <Input
             required
             placeholder="Giá tiền của sản phẩm"
-            value={dataEdit.price}
+            value={detailProduct.price}
             onChange={(e) =>
-              setDataEdit({ ...dataEdit, price: +e.target.value })
+              setDetailProduct({ ...detailProduct, price: +e.target.value })
             }
           />
         </Form.Item>
