@@ -12,10 +12,12 @@ import SearchField from '../SearchField/SearchField';
 import { useSelector } from 'react-redux';
 
 function Content() {
+  const [priceRange, setPriceRange] = useState(0);
+
   const products = useSelector((state) => state.product.products);
   return (
     <>
-      <SearchField />
+      <SearchField setPriceRange={setPriceRange} />
       <div className="row">
         <div className="col-3">
           <h5>Filter By</h5>
@@ -23,13 +25,13 @@ function Content() {
             <Filter />
             <Filter />
             <Filter />
-            <Slide />
+            <Slide setPriceRange={setPriceRange} priceRange={priceRange} />
           </div>
         </div>
         <div className="col-9">
-          <Product />
+          <Product priceRange={priceRange} />
           <Pagination
-            defaultCurrent={1}
+            // defaultCurrent={1}
             total={products.length}
             defaultPageSize={3}
             style={{ textAlign: 'center', paddingBottom: '50px' }}

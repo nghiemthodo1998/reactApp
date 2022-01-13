@@ -8,7 +8,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../Redux/cartSlice';
 
-function Product() {
+function Product(props) {
+  const { priceRange } = props;
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.product.products);
@@ -19,14 +20,14 @@ function Product() {
     dispatch(addToCart(result));
   };
 
-  console.log(searchTerm);
-
   return (
     <div className="row">
       {products
         .filter((item) => {
-          if (searchTerm == '') {
-            return item;
+          if (searchTerm === '') {
+            if (priceRange > 0) {
+              return item.price <= priceRange;
+            } else return item;
           } else if (
             item.name.toLowerCase().includes(searchTerm.toLowerCase())
           ) {

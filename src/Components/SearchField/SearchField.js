@@ -4,7 +4,8 @@ import Search from '../../Picture/Search.png';
 import { getSearchTerm } from '../../Redux/productSlice';
 import Filter from '../Filter/Filter';
 
-function SearchField() {
+function SearchField(props) {
+  const { setPriceRange } = props;
   const [searchTerm, setSearchTerm] = useState('');
 
   const dispatch = useDispatch();
@@ -12,18 +13,9 @@ function SearchField() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchTerm('');
+    setPriceRange(0);
     dispatch(getSearchTerm(searchTerm));
   };
-
-  const products = useSelector((state) => state.product.products);
-
-  const searchedProducts = products.filter(
-    (item) => searchTerm === item.name.toLowerCase()
-  );
-
-  const tes = products.map((item) => item.name.toLowerCase());
-
-  console.log(searchedProducts);
 
   return (
     <>

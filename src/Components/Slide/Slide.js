@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getSearchTerm } from '../../Redux/productSlice';
 import './Slide.css';
 
-const Slide = () => {
-  const [priceRange, setPriceRange] = useState(0);
-
+const Slide = (props) => {
+  const dispatch = useDispatch();
+  const { priceRange, setPriceRange } = props;
   return (
     <div>
       <h4>Price Range: ${priceRange}</h4>
@@ -13,7 +15,10 @@ const Slide = () => {
         min="0"
         max="10000"
         value={priceRange}
-        onChange={(e) => setPriceRange(e.target.value)}
+        onChange={(e) => {
+          dispatch(getSearchTerm(''));
+          setPriceRange(e.target.value);
+        }}
       />
       <div className="range-price">
         <span className="left">$0</span>
