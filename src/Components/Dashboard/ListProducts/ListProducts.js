@@ -6,8 +6,14 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProduct } from '../../../Redux/productSlice';
 
+const pagination = {
+  defaultPageSize: 5,
+};
+
 function ListProducts() {
   const products = useSelector((state) => state.product.products);
+
+  console.log(products);
 
   const dispatch = useDispatch();
 
@@ -78,7 +84,13 @@ function ListProducts() {
   return (
     <div>
       List Products
-      <Table rowKey={'id'} dataSource={products} columns={columns} />;
+      <Table
+        rowKey={'id'}
+        dataSource={products}
+        columns={columns}
+        pagination={pagination}
+      />
+      ;
     </div>
   );
 }

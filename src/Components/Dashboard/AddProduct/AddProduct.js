@@ -13,6 +13,7 @@ const initialProduct = {
   count: 1,
   rating: '',
   price: '',
+  id: '',
 };
 
 function AddProduct() {
@@ -21,10 +22,12 @@ function AddProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const products = useSelector((state) => state.product.products);
+  console.log(products.length);
+
   const categories = useSelector((state) => state.category.categories);
 
   const handleSubmit = async (e) => {
-    console.log(product);
     await axios
       .post('http://localhost:8000/products', {
         name: product.name,
@@ -32,8 +35,10 @@ function AddProduct() {
         count: product.count,
         rating: product.rating,
         price: product.price,
+        id: product.id,
       })
       .then(() => {
+        setProduct({ ...product, id: products.length });
         dispatch(addProduct(product));
         navigate('/dashboard/products');
       });

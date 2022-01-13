@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   products: [],
+  searchTerm: '',
 };
 
 const productSlice = createSlice({
@@ -16,6 +17,7 @@ const productSlice = createSlice({
       state.products = [
         ...state.products,
         {
+          id: action.payload.id,
           name: action.payload.name,
           category: action.payload.category,
           rating: action.payload.rating,
@@ -33,9 +35,17 @@ const productSlice = createSlice({
       const indexProduct = state.products.findIndex((item) => item.id === +id);
       state.products.splice(indexProduct, 1, action.payload);
     },
+    getSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
-export const { getProducts, addProduct, deleteProduct, editProduct } =
-  productSlice.actions;
+export const {
+  getProducts,
+  addProduct,
+  deleteProduct,
+  editProduct,
+  getSearchTerm,
+} = productSlice.actions;
 export default productSlice.reducer;

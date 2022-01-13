@@ -12,6 +12,7 @@ import SearchField from '../SearchField/SearchField';
 import { useSelector } from 'react-redux';
 
 function Content() {
+  const products = useSelector((state) => state.product.products);
   return (
     <>
       <SearchField />
@@ -28,8 +29,9 @@ function Content() {
         <div className="col-9">
           <Product />
           <Pagination
-            defaultCurrent={6}
-            total={500}
+            defaultCurrent={1}
+            total={products.length}
+            defaultPageSize={3}
             style={{ textAlign: 'center', paddingBottom: '50px' }}
           />
         </div>

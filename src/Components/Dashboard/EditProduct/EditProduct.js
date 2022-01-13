@@ -35,7 +35,7 @@ function EditProduct() {
         category: detailProduct.category,
         rating: detailProduct.rating,
         price: detailProduct.price,
-        count: detailProduct.counts,
+        count: detailProduct.count,
       })
       .then(() => {
         dispatch(editProduct(detailProduct));

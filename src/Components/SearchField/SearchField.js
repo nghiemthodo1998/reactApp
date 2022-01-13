@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Search from '../../Picture/Search.png';
+import { getSearchTerm } from '../../Redux/productSlice';
 import Filter from '../Filter/Filter';
 
 function SearchField() {
-  const [textSearch, setTextSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(textSearch);
-    setTextSearch('');
+    setSearchTerm('');
+    dispatch(getSearchTerm(searchTerm));
   };
+
+  const products = useSelector((state) => state.product.products);
+
+  const searchedProducts = products.filter(
+    (item) => searchTerm === item.name.toLowerCase()
+  );
+
+  const tes = products.map((item) => item.name.toLowerCase());
+
+  console.log(searchedProducts);
 
   return (
     <>
@@ -28,8 +42,8 @@ function SearchField() {
             <input
               className="search-input col-11"
               placeholder="Search..."
-              value={textSearch}
-              onChange={(e) => setTextSearch(e.target.value)}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </form>
