@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Rate } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../Redux/cartSlice';
+import { addToCart } from '../../Redux/userSlice';
 
 function Product(props) {
   const { priceRange } = props;
@@ -14,10 +14,20 @@ function Product(props) {
 
   const products = useSelector((state) => state.product.products);
   const searchTerm = useSelector((state) => state.product.searchTerm);
+  const infoUserLogin = useSelector((state) => state.users.userLogin);
 
   const handleAddToCart = (id) => {
-    const result = products.find((item) => item.id === id);
-    dispatch(addToCart(result));
+    if (infoUserLogin.username) {
+      const condition = infoUserLogin.cart.find((item) => item.id === id);
+      if (condition) {
+        alert('Sản phẩm này đã được thêm vào giỏ trước đó');
+      } else {
+        const result = products.find((item) => item.id === id);
+        dispatch(addToCart(result));
+      }
+    } else {
+      alert('Hãy đăng nhập trước khi thêm sản phẩm vào giỏ.');
+    }
   };
 
   return (

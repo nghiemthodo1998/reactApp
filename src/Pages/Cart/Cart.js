@@ -7,7 +7,7 @@ import {
   deteleProductCart,
   decreaseCount,
   increaseCount,
-} from '../../Redux/cartSlice';
+} from '../../Redux/userSlice';
 
 const inititalPagination = {
   current: 2,
@@ -16,7 +16,7 @@ const inititalPagination = {
 
 const Cart = () => {
   const [pagination, setPagination] = useState(inititalPagination);
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.users.userLogin);
   const dispatch = useDispatch();
   const columns = [
     {
@@ -106,7 +106,7 @@ const Cart = () => {
       <Table
         className="table-overview"
         rowKey={'id'}
-        dataSource={cart}
+        dataSource={cart.cart}
         columns={columns}
         // pagination={pagination}
         pagination={false}

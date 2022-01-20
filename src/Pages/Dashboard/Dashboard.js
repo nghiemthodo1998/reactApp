@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
+import axios from 'axios';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { DesktopOutlined, PlusOutlined } from '@ant-design/icons';
 import { Link, NavLink } from 'react-router-dom';
 import RouteAdmin from '../../Routes/RouteAdmin/RouteAdmin';
+import { useDispatch } from 'react-redux';
+import { getCategories } from '../../Redux/categorySlice';
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Dashboard() {
   const [collapsed, setCollapsed] = useState(false);
+
+  const dispatch = useDispatch();
+
+  axios.get('http://localhost:8000/categories').then((res) => {
+    dispatch(getCategories(res.data));
+  });
 
   const onCollapse = () => {
     setCollapsed(!collapsed);

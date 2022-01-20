@@ -3,8 +3,9 @@ import { Button } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { getInfoUser } from '../../Redux/userSlice';
 
 const initialUser = {
   email: 'nghiemthodo1998@gmail.com',
@@ -16,6 +17,7 @@ function Login() {
   const listUser = useSelector((state) => state.users.listUser);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,11 +33,11 @@ function Login() {
     ) {
       if (infoUser.role === 'admin') {
         toast.success('Tài khoản admin đã đăng nhập thành công.');
-        localStorage.setItem('email', user.email);
+        dispatch(getInfoUser(infoUser));
         navigate('/dashboard/products');
       } else {
         toast.success(`Tài khoản ${user.email} đã đăng nhập thành công.`);
-        localStorage.setItem('email', user.email);
+        dispatch(getInfoUser(infoUser));
         navigate('/');
       }
     } else toast.warning('Bạn đã điền sai thông tin đăng nhập.');

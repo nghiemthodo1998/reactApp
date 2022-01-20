@@ -7,21 +7,18 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Auth/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from './Redux/productSlice';
-import { getCategories } from './Redux/categorySlice';
 import { getListUser } from './Redux/userSlice';
 
 function App() {
   const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.users.userLogin);
+  console.log(userLogin);
 
   useEffect(() => {
     axios.get('http://localhost:8000/products').then((res) => {
       dispatch(getProducts(res.data));
-    });
-
-    axios.get('http://localhost:8000/categories').then((res) => {
-      dispatch(getCategories(res.data));
     });
 
     axios.get('http://localhost:8000/listuser').then((res) => {
@@ -34,9 +31,23 @@ function App() {
       <div className="App">
         <div className="overview">
           <Routes>
-            <Route exact strict path="/dashboard/*" element={<Dashboard />} />
-            <Route exact strict path="/*" element={<Home />} />
-            <Route exact strict path="/login" element={<Login />} />
+            {userLogin && userLogin.role === 'admin' ? (
+              <>
+                <Route
+                  exact
+                  strict
+                  path="/dashboard/*"
+                  element={<Dashboard />}
+                />
+                <Route exact strict path="/*" element={<Home />} />
+                <Route exact strict path="/login" element={<Login />} />
+              </>
+            ) : (
+              <>
+                <Route exact strict path="/*" element={<Home />} />
+                <Route exact strict path="/login" element={<Login />} />
+              </>
+            )}
           </Routes>
         </div>
       </div>
